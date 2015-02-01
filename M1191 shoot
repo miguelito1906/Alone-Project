@@ -1,0 +1,67 @@
+using UnityEngine;
+using System.Collections;
+
+public class M1911Shoot : MonoBehaviour {
+
+    public int M1911clip = 60;
+    public int M1911BulletsPerClip = 15;
+    public Transform M1911BulletSpawn;
+    public Rigidbody M1911Bullet;
+    public AudioClip M1911BulletSound;
+    public AudioClip M1911ReloadSound;
+    public AudioClip m1911ReadySound;
+    public float M1911FireRate;
+    public GameObject M1911MuzzleFlash;
+    public Transform M1911MuzzleFlashSpawn;
+	public float M1911ShootDist = 100f;
+
+	RaycastHit Hit;
+
+    private int M1911BulletsLeft = 0;
+    private float M1911ReloadTime = 3.3f;
+    private float M1911NextFireRate;
+	
+	// Use this for initialization
+	void Start () 
+	{
+		audio.PlayOneShot (m1911ReadySound);
+	}
+	
+	// Update is called once per frame
+	void Update () 
+    {
+	    if(Input.GetButtonDown("Fire1") && Time.time > M1911NextFireRate)
+        {
+            M1911NextFireRate = Time.time + M1911FireRate;
+
+           /* Rigidbody M19911_Shoot;
+            M19911_Shoot = Instantiate(M1911Bullet, M1911BulletSpawn.transform.position, M1911BulletSpawn.transform.rotation) as Rigidbody;
+            M19911_Shoot.AddForce(M1911BulletSpawn.forward * 50000);*/
+
+			if(Physics.Raycast(transform.position, transform.forward, M1911ShootDist))
+				print("it has hit something");
+
+
+            GameObject m11911Flash;
+            m11911Flash = Instantiate(M1911MuzzleFlash, M1911MuzzleFlashSpawn.position, M1911MuzzleFlashSpawn.rotation) as GameObject;
+            audio.Play();
+            M1911BulletsPerClip--;
+
+            if(M1911BulletsPerClip < 0)
+            {
+                M1911BulletsPerClip = 0;
+            }
+        }
+
+		M1911RealodSound ();
+	}
+
+    void M1911RealodSound()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            audio.PlayOneShot(M1911ReloadSound);
+            M1911BulletsPerClip = 30;
+        }
+    }
+}
