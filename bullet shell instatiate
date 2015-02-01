@@ -1,0 +1,24 @@
+using UnityEngine;
+using System.Collections;
+
+public class bulletShellEject : MonoBehaviour {
+
+	public Rigidbody bulletShell;
+	public Transform bulletShellSpawn;
+	public float bulletShellSpawnRate;
+
+	private float nextBulletShell;
+
+	// Update is called once per frame
+	void Update () 
+	{
+		if(Input.GetButton("Fire1") && Time.time > nextBulletShell)
+	 	{
+			nextBulletShell = Time.time + bulletShellSpawnRate;
+
+			Rigidbody B_shell;
+			B_shell = Instantiate(bulletShell, bulletShellSpawn.transform.position, bulletShellSpawn.transform.rotation) as Rigidbody;
+			B_shell.velocity = transform.TransformDirection(Vector3.left * 10);
+		}
+	}
+}
