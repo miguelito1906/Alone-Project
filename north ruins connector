@@ -1,0 +1,10 @@
+using UnityEngine;
+using System.Collections;
+
+public class connectorLoader : MonoBehaviour {
+
+	void OnTriggerEnter (Collider col)
+	{
+		Application.LoadLevel ("North Ruins Connector");
+	}
+}
