@@ -1,0 +1,10 @@
+using UnityEngine;
+using System.Collections;
+
+public class LogoPresentation : MonoBehaviour {
+
+	public void LoadLevel(int menu)
+	{
+		Application.LoadLevel (menu);
+	}
+}
