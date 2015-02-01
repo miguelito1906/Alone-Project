@@ -1,0 +1,10 @@
+using UnityEngine;
+using System.Collections;
+
+public class snowLoader : MonoBehaviour {
+
+	void OnTriggerEnter(Collider col)
+	{
+		Application.LoadLevel ("snow level");
+	}
+}
