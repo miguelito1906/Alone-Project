@@ -1,0 +1,48 @@
+#pragma strict
+var weapon01 : GameObject;
+var weapon02 : GameObject;
+var weapon03 : GameObject;
+
+function Update () 
+{
+	if(Input.GetKeyDown(KeyCode.F1))
+	{
+		SwapWeapons();
+	}
+	if(Input.GetKeyDown(KeyCode.F2))
+	{
+		SwapWeapons2();
+	}
+}
+
+function SwapWeapons()
+{
+		if(weapon01.active == true)
+		{
+			weapon01.SetActiveRecursively(false);
+			weapon02.SetActiveRecursively(true);
+			weapon03.SetActiveRecursively(false);
+		}
+		else
+		{
+			weapon01.SetActiveRecursively(true);
+			weapon02.SetActiveRecursively(false);
+			weapon03.SetActiveRecursively(false);
+		}
+}
+
+function SwapWeapons2()
+{
+	if(weapon03.active == true)
+	{
+		weapon01.SetActiveRecursively(true);
+		weapon02.SetActiveRecursively(false);
+		weapon03.SetActiveRecursively(false);
+	}
+	else
+	{
+		weapon01.SetActiveRecursively(false);
+		weapon02.SetActiveRecursively(false);
+		weapon03.SetActiveRecursively(true);
+	}
+}
