@@ -1,0 +1,96 @@
+using UnityEngine;
+using System.Collections;
+
+public class Mp5_Shoot : MonoBehaviour {
+
+	public Mp5_Shoot()
+	{
+		clip = 90;
+		bulletsPerClip = 10;
+		bulletsLeft = 0;
+	}
+	public int clip;
+	public int bulletsPerClip;
+	public int bulletsLeft;
+	public Transform BulletSpawn;
+	public Rigidbody bullet;
+	public AudioClip bulletSound;
+	public AudioClip MP5Reload;
+	public AudioClip MP5Ready;
+	public AudioClip noAmmo;
+	public float noAmmoRate;
+	public float fireRate;
+	public GameObject muzzleFlash;
+	public Transform muzzleFlashSpawn;
+	public Rigidbody bulletShell;
+	public Transform bulletShellSpawn;
+	public float bulletShellSpawnRate;
+	
+	private float nextBulletShell;
+
+	private float ReloadTime = 3.3f;
+	private float nextFire;
+	private float NextNoAmmoRate;
+
+	RaycastHit hit = new RaycastHit();
+
+	public float shootMinDistance = 10f;
+
+	void Start()
+	{
+		audio.PlayOneShot(MP5Ready);
+	}
+
+	void Update() 
+	{
+		if(Input.GetButton("Fire1") && Time.time > nextFire && bulletsPerClip > 0)
+		{
+			nextFire = Time.time + fireRate;
+
+			/*Rigidbody B_shot;
+			B_shot = Instantiate(bullet, BulletSpawn.transform.position, BulletSpawn.transform.rotation) as Rigidbody;
+			B_shot.AddForce(BulletSpawn.forward * 50000);*/
+
+			if(Physics.Raycast (transform.position, transform.forward, out hit,shootMinDistance))
+				print ("hit success!");
+			else
+				print ("hit not success!");
+			
+			GameObject M_flash;
+			M_flash = Instantiate(muzzleFlash, muzzleFlashSpawn.transform.position, muzzleFlashSpawn.transform.rotation) as GameObject; 
+			audio.Play();
+			bulletsPerClip--;
+
+			nextBulletShell = Time.time + bulletShellSpawnRate;
+			
+			Rigidbody B_shell;
+			B_shell = Instantiate(bulletShell, bulletShellSpawn.transform.position, bulletShellSpawn.transform.rotation) as Rigidbody;
+			B_shell.velocity = transform.TransformDirection(Vector3.left * 10);
+
+		}
+
+		MP5reloadSound();
+		noAmmoSound ();
+	}
+
+	void MP5reloadSound()
+	{
+		if (Input.GetKeyDown(KeyCode.R)) 
+		{
+			audio.PlayOneShot(MP5Reload);
+			bulletsPerClip = 30;
+			clip -= bulletsPerClip;
+		} 
+
+	}
+
+	void noAmmoSound()
+	{
+		if (Input.GetButton("Fire1") && bulletsPerClip == 0 && Time.time > NextNoAmmoRate) 
+		{
+			NextNoAmmoRate = Time.time + noAmmoRate;
+			audio.PlayOneShot(noAmmo);
+		}
+	}
+	
+}
