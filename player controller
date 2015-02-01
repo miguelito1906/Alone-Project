@@ -1,0 +1,64 @@
+using UnityEngine;
+using System.Collections;
+
+[RequireComponent (typeof(CharacterController))]
+[RequireComponent(typeof(AudioSource))]
+
+
+public class PlayerController : MonoBehaviour {
+
+	//public float playerMovement = 10f;
+	public float playerSpeed =0f;
+	public float runSpeed = 0f;
+	public Vector3 moveDirection;
+	public CharacterController character;
+	public AudioClip footSteps;
+	public AudioClip jump;
+	public float health = 100f;
+
+	// Use this for initialization
+	void Start () 
+	{
+		character = GetComponent<CharacterController>();
+		moveDirection = Vector3.zero;
+	}
+	
+	// Update is called once per frame
+	void Update () 
+	{
+		moveDirection = Vector3.forward * Input.GetAxis ("Vertical");
+		moveDirection = transform.TransformDirection (moveDirection).normalized;
+		moveDirection *= playerSpeed;
+
+		character.Move (moveDirection * Time.deltaTime);
+
+		if (Input.GetKey (KeyCode.H)) 
+		{
+			moveDirection = Vector3.forward * Input.GetAxis ("Vertical");
+			moveDirection = transform.TransformDirection (moveDirection).normalized;
+			moveDirection *= playerSpeed * runSpeed;
+
+			character.Move (moveDirection * Time.deltaTime);
+		}
+
+		if (Input.GetKeyDown (KeyCode.W) || (Input.GetKeyDown (KeyCode.S)) || (Input.GetKeyDown (KeyCode.A))  || (Input.GetKeyDown (KeyCode.D)) || Input.GetKeyUp(KeyCode.Space)) 
+		{
+			audio.clip = footSteps;
+			audio.Play();
+		} 
+		if(Input.GetKeyUp(KeyCode.W) || (Input.GetKeyUp (KeyCode.S)) || (Input.GetKeyUp (KeyCode.A))  || (Input.GetKeyUp(KeyCode.D)) || Input.GetKeyUp(KeyCode.Space))
+		{
+			audio.Stop();
+		}
+
+		jumpSound ();
+	}
+
+	void jumpSound()
+	{
+		if(Input.GetKeyDown(KeyCode.Space))
+		{
+			audio.PlayOneShot(jump);
+		}
+	}
+}
