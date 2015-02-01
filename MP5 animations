@@ -1,0 +1,84 @@
+using UnityEngine;
+using System.Collections;
+[RequireComponent(typeof(AudioSource))]
+
+public class MP5Animations : MonoBehaviour 
+{
+	private Animator anim;
+
+
+	void Start()
+	{
+		anim = GetComponent<Animator>();
+	}
+
+	void Update()
+	{
+		ShootAnim ();
+		ReloadAnim ();
+		RunningAnim ();
+		AimSightsAnim ();
+        recoil();
+	}
+
+	void ShootAnim()
+	{
+		if (Input.GetButton ("Fire1")) 
+		{
+			anim.SetBool ("isShooting", true);
+		} 
+		else 
+		{
+			anim.SetBool ("isShooting", false);
+		}
+	}
+
+	void ReloadAnim()
+	{
+		if (Input.GetKey (KeyCode.R)) 
+		{
+			anim.SetBool ("isReload", true);
+		}
+		else 
+		{
+			anim.SetBool("isReload", false);
+		}
+
+	}
+
+	void RunningAnim()
+	{
+		if (Input.GetKey (KeyCode.H)) 
+		{
+			anim.SetBool("isRunning" , true);
+		} 
+		 else
+		{
+			anim.SetBool("isRunning", false);
+		} 
+	}
+
+	void AimSightsAnim ()
+	{
+		if (Input.GetButton("Fire2")) 
+		{
+			anim.SetBool("isAiming", true);
+		} 
+		else 
+		{
+			anim.SetBool("isAiming", false);
+		}
+	}
+
+    void recoil()
+    {
+        if (Input.GetButton("Fire1"))
+        {
+            anim.SetBool("MP5Recoil", true);
+        }
+        else
+        {
+            anim.SetBool("MP5Recoil", false);
+        }
+    }
+}
