@@ -1,0 +1,10 @@
+using UnityEngine;
+using System.Collections;
+
+public class StartMenu : MonoBehaviour {
+
+	public void changeScene(int SceneMenu) 
+	{
+		Application.LoadLevel (SceneMenu);
+	}
+}
