@@ -1,0 +1,50 @@
+using UnityEngine;
+using System.Collections;
+
+public class KatanaSwing : MonoBehaviour {
+
+	public AudioClip katanaReadySound;
+	public AudioClip katanaSwingSound;
+
+	private Animator katanaAnim;
+
+	// Use this for initialization
+	void Start () 
+	{
+		katanaAnim = GetComponent<Animator>();
+		audio.PlayOneShot(katanaReadySound);
+	}
+	
+	// Update is called once per frame
+	void Update () 
+	{
+		katanaSwingRightAnim();
+		katanaSwingLeftAnim ();
+	}
+
+	void katanaSwingRightAnim()
+	{
+		if(Input.GetButtonDown("Fire1"))
+		{
+			katanaAnim.SetBool("isSwingRight", true);
+			audio.PlayOneShot(katanaSwingSound);
+		}
+		else
+		{
+			katanaAnim.SetBool("isSwingRight", false);
+		}
+	}
+
+	void katanaSwingLeftAnim()
+	{
+		if(Input.GetButtonDown("Fire2"))
+		{
+			katanaAnim.SetBool("isSwingLeft", true);
+			audio.PlayOneShot(katanaSwingSound);
+		}
+		else
+		{
+			katanaAnim.SetBool("isSwingLeft", false);
+		}
+	}
+}
