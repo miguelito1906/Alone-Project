@@ -1,0 +1,10 @@
+using UnityEngine;
+using System.Collections;
+
+public class AdviceMessage : MonoBehaviour {
+
+	public void LoadLevel(int logo)
+	{
+		Application.LoadLevel (logo);
+	}
+}
