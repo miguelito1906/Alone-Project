@@ -1,0 +1,10 @@
+using UnityEngine;
+using System.Collections;
+
+public class IntroMessage : MonoBehaviour {
+
+	public void LoadLevel(int intro)
+	{
+		Application.LoadLevel (intro);
+	}
+}
